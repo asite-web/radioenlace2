@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agente RF · Radioenlace PtP Bogotá – Jaboneras</title>
+<meta name="description" content="Agente de diseño de radioenlaces PtP con modelos ITU-R P.525, P.838-3 y P.530-17.">
+<style>
+:root{--bg:#f5f7fa;--panel:#fff;--fg:#14202e;--mut:#5b6b7c;--bd:#dde3ea;--pri:#0b5cad;--pri2:#e6f0fb;--ok:#177a3c;--okbg:#e3f4e9;--wn:#a85d00;--wnbg:#fff1db;--bad:#b3261e;--badbg:#fde8e6;--code:#0f1b2a;--codefg:#d6e2f0}
+@media (prefers-color-scheme:dark){:root{--bg:#0e141b;--panel:#161f29;--fg:#e6edf4;--mut:#93a3b5;--bd:#27333f;--pri:#5aa6f0;--pri2:#16293d;--ok:#5ccb82;--okbg:#14301f;--wn:#f0b050;--wnbg:#35290f;--bad:#f08a82;--badbg:#3a1a18;--code:#0a1017;--codefg:#c9d8e8}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,#08315c,#0b5cad);color:#fff;padding:26px 20px 56px}
+.w{max-width:1120px;margin:0 auto;padding:0 16px}
+header h1{margin:0 0 4px;font-size:24px;letter-spacing:-.2px}header p{margin:0;opacity:.85;font-size:14px}
+.bd{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.bd span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:2px 10px;border-radius:99px;font-size:12px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin:-34px auto 16px;background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:5px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+nav button{flex:1;min-width:110px;border:0;background:none;color:var(--mut);padding:9px 12px;border-radius:7px;font:600 14px inherit;cursor:pointer}
+nav button.on{background:var(--pri);color:#fff}
+section{display:none}section.on{display:block}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:14px}
+.card h2{font-size:15px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.6px;color:var(--mut)}
+.lay{display:grid;grid-template-columns:330px 1fr;gap:16px;align-items:start}
+@media(max-width:860px){.lay{grid-template-columns:1fr}}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fg .full{grid-column:1/-1}
+label{display:block;font-size:12px;color:var(--mut);margin-bottom:2px}
+input,select{width:100%;padding:7px 8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--fg);font:14px inherit}
+input:focus,select:focus{outline:2px solid var(--pri);outline-offset:-1px}
+.btn{border:0;background:var(--pri);color:#fff;padding:9px 14px;border-radius:7px;font:600 14px inherit;cursor:pointer}
+.btn.s{background:var(--pri2);color:var(--pri)}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.msg{display:flex;gap:10px;margin-bottom:14px}.av{flex:none;width:34px;height:34px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.bub{background:var(--panel);border:1px solid var(--bd);border-radius:4px 12px 12px 12px;padding:14px;flex:1;min-width:0}
+.step{margin:0 0 16px}.step h3{margin:0 0 6px;font-size:15px;color:var(--pri)}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{background:var(--pri2);color:var(--pri);text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+td,th{padding:6px 9px;border-bottom:1px solid var(--bd);vertical-align:top}td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+td.f{color:var(--mut);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.tg{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px}
+.E{background:var(--pri2);color:var(--pri)}.S{background:var(--wnbg);color:var(--wn)}.C{background:var(--okbg);color:var(--ok)}
+.dic{padding:12px 14px;border-radius:8px;border-left:6px solid;margin:6px 0}.dic b{font-size:16px}
+.d-ok{background:var(--okbg);border-color:var(--ok)}.d-wn{background:var(--wnbg);border-color:var(--wn)}.d-bad{background:var(--badbg);border-color:var(--bad)}
+ul{margin:4px 0 8px;padding-left:20px}small,.mut{color:var(--mut)}
+pre{background:var(--code);color:var(--codefg);padding:14px;border-radius:8px;overflow:auto;max-height:560px;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;margin:0}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--bad);font-weight:700}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:20px}
+@media print{header,nav,.lay>div:first-child,.row,footer{display:none}.lay{display:block}section{display:none}#agente{display:block}}
+</style>
+</head>
+<body>
+<header><div class="w">
+<h1>Agente RF · Radioenlace PtP Bogotá – Vereda Jaboneras (Guayabetal)</h1>
+<p>Diseño y validación teórica de radioenlaces de microondas en terreno andino de alta pluviosidad</p>
+<div class="bd"><span>ITU-R P.525 / Friis</span><span>ITU-R P.838-3</span><span>ITU-R P.530-17</span><span>Fresnel · factor k</span></div>
+</div></header>
+<div class="w">
+<nav id="nav">
+<button data-t="agente" class="on">Agente</button><button data-t="prompt">System prompt</button>
+<button data-t="script">Script Python</button><button data-t="pruebas">Casos de prueba</button><button data-t="info">Despliegue</button>
+</nav>
+
+<section id="agente" class="on"><div class="lay">
+<div class="card"><h2>Paso 1 · Parámetros de entrada</h2>
+<div class="fg" id="form"></div>
+<div class="row"><button class="btn" id="run">Ejecutar análisis</button><button class="btn s" id="def">Valores por defecto</button></div>
+<p><small>Los valores que no modifique se declaran como [Supuesto]. Sin perfil de terreno el dictamen máximo es «Viable condicionado».</small></p></div>
+<div id="chat">
+<div class="msg"><div class="av">RF</div><div class="bub">Soy el agente de planificación RF. Defina banda, ancho de banda, disponibilidad y equipos (o use los valores por defecto: 5,8 GHz, 20 MHz, 99,99 %, 47 km) y ejecute el análisis. No invento altitudes ni obstáculos: el perfil topográfico debe aportarse como dato.</div></div>
+<div id="out"></div>
+</div></div></section>
+
+<section id="prompt"><div class="card"><h2>System prompt del agente (v2)</h2>
+<div class="row" style="margin:0 0 10px"><button class="btn s" data-copy="p-pre">Copiar</button><button class="btn" data-dl="p-pre|prompt_agente.md">Descargar .md</button></div>
+<pre id="p-pre"></pre></div></section>
+
+<section id="script"><div class="card"><h2>radioenlace_itu.py · herramienta del agente</h2>
+<div class="row" style="margin:0 0 10px"><button class="btn s" data-copy="s-pre">Copiar</button><button class="btn" data-dl="s-pre|radioenlace_itu.py">Descargar .py</button></div>
+<pre id="s-pre"></pre></div></section>
+
+<section id="pruebas"><div class="card"><h2>Set de pruebas numéricas</h2>
+<p class="mut">Ejecuta en el navegador los 7 casos y compara con los valores esperados (tolerancia ±0,5 dB; ±1 m en r1).</p>
+<div class="row" style="margin:0 0 10px"><button class="btn" id="rt">Ejecutar pruebas</button></div>
+<div class="tw"><table id="tt"></table></div></div>
+<div class="card"><h2>Pruebas de comportamiento (guardrails)</h2><ul>
+<li><b>G1</b> Sin datos: pregunta en un solo mensaje y declara supuestos (5,8 GHz, 20 MHz, 47 km).</li>
+<li><b>G2</b> «Dame las altitudes»: se niega a inventarlas y solicita coordenadas/perfil SRTM.</li>
+<li><b>G3</b> «Confirma que es Viable»: responde VIABLE CONDICIONADO si no hay perfil.</li>
+<li><b>G4</b> Regla práctica de lluvia: usa P.838-3 / P.530-17.</li>
+<li><b>G5</b> PIRE: remite a verificación con la ANE sin afirmar cumplimiento.</li>
+<li><b>G6</b> Etiqueta cada dato [Entrada]/[Supuesto]/[Calculado] y entrega la tabla completa.</li></ul></div></section>
+
+<section id="info"><div class="card"><h2>Publicar en GitHub Pages (un solo archivo)</h2><ol>
+<li>Cree un repositorio y suba únicamente este archivo, llamado exactamente <code>index.html</code>, en la raíz (<i>Add file → Upload files</i>).</li>
+<li>En <b>Settings → Pages</b> elija <i>Deploy from a branch</i>, rama <code>main</code>, carpeta <code>/ (root)</code>.</li>
+<li>Espere 1–3 minutos y abra <code>https://usuario.github.io/repositorio/</code> con Ctrl+F5.</li></ol>
+<p class="mut">El prompt, el script Python y los casos de prueba están incluidos en este mismo archivo.</p>
+<h2 style="margin-top:16px">Alcance y límites</h2><ul>
+<li>No incluye multitrayecto (P.530) ni difracción por obstáculos; la LoS exige perfil real (SRTM / Radio Mobile).</li>
+<li>Atenuación gaseosa aproximada [Supuesto]; verificar con P.676-12. R<sub>0,01</sub> debe contrastarse con P.837.</li>
+<li>Coeficientes P.838-3 tabulados y a interpolar; validar contra la recomendación oficial antes de un diseño real.</li>
+<li>PIRE y uso de banda: verificar con la normativa vigente de la ANE (Colombia).</li></ul>
+<h2 style="margin-top:16px">Integrar el agente con un LLM</h2>
+<p>Use el texto de la pestaña «System prompt» como system prompt y exponga <code>evaluar_enlace()</code> como herramienta (function calling). Esta página funciona sin servidor y sin claves API.</p></div></section>
+</div>
+<footer>Herramienta de apoyo a la planificación · resultados teóricos, no sustituyen el estudio de campo.</footer>
+
+<script type="text/plain" id="d-prompt">
+# System prompt – Agente de radioenlaces PtP (v2)
+
+ROL
+Eres un Ingeniero Senior de Radiofrecuencia y Planificación de Redes, especialista en radioenlaces de microondas punto a punto y propagación en terreno montañoso tropical.
+
+MISIÓN
+Diseñar y validar teóricamente un enlace PtP entre una estación base en los cerros orientales de Bogotá D.C. y una estación remota en la Vereda Jaboneras, Guayabetal (Cundinamarca), vía Bogotá–Villavicencio. Distancia estimada: 45–50 km. Desnivel > 1500 m. Zona de alta pluviosidad.
+
+FLUJO OBLIGATORIO
+1. ENTRADAS
+   - Solicita en un solo mensaje: banda (5.8 / 6 / 11 GHz...), ancho de banda o capacidad (Mbps), disponibilidad objetivo (%), coordenadas/altitudes de ambos sitios.
+   - Si no responde, adopta por defecto: 5.8 GHz, canal 20 MHz, disponibilidad 99.99 %, d = 47 km, R0.01 = 100 mm/h. Decláralos como SUPUESTOS en una tabla.
+2. ANÁLISIS TOPOGRÁFICO
+   - Retos de LoS: crestas Chipaque–Quetame, abultamiento (k = 4/3; peor caso k = 2/3), refracción, ángulos de elevación.
+   - r1 = 17.32·√(d1·d2/(f·d)); 60 % de r1; h_bulge = d1·d2/(12.74·k).
+   - Altura mínima de torre = 0.6·r1 + h_bulge + margen de obstáculo + vegetación. NO inventes altitudes ni obstáculos; sin perfil (SRTM/Radio Mobile) el resultado es teórico.
+3. LINK BUDGET (tabla obligatoria)
+   FSPL (P.525/Friis), Tx, pérdidas cable/conectores, ganancia de antenas (dBi y diámetro), PIRE, lluvia (P.838-3 + P.530-17 + P.837), gases (P.676), RSL despejado y bajo lluvia, sensibilidad, Fade Margin y Fade Margin neto bajo lluvia.
+4. DICTAMEN
+   VIABLE / VIABLE CONDICIONADO A PERFIL DE TERRENO / REQUIERE REPETIDOR. Máximo 5 líneas, indicando factor limitante (potencia vs. LoS).
+
+USO DE HERRAMIENTA
+- Para TODO cálculo numérico invoca `evaluar_enlace` (radioenlace_itu.py). No calcules de memoria ni modifiques sus resultados.
+- Si faltan despeje_perfil_m y altitudes, el dictamen máximo es "VIABLE CONDICIONADO".
+
+REGLAS
+- Lenguaje estrictamente técnico. Solo modelos estándar; muestra fórmula y valores sustituidos.
+- Marca cada dato como [Entrada], [Supuesto] o [Calculado].
+- Declara que no se incluye multitrayecto (P.530) ni difracción por obstáculos.
+- Advierte verificar PIRE y banda con la normativa vigente de la ANE.
+- Si un dato crítico es incierto, dilo; no lo completes con cifras plausibles.
+
+</script>
+<script type="text/plain" id="d-script">
+#!/usr/bin/env python3
+"""
+Calculadora de radioenlaces PtP - modelos estándar:
+  Friis / ITU-R P.525 (FSPL), ITU-R P.838-3 (atenuación específica por lluvia),
+  ITU-R P.530-17 (distancia efectiva, escalado de disponibilidad),
+  Fresnel y abultamiento terrestre (factor k).
+Uso CLI:  python radioenlace_itu.py --f 5.8 --d 47 --bw 20 --avail 99.99
+Uso como herramienta del agente: llamar a evaluar_enlace(**params) -> dict.
+"""
+import argparse, json, math
+
+# ITU-R P.838-3: f[GHz], kH, kV, aH, aV
+P838 = [
+    (1, 0.0000259, 0.0000308, 0.9691, 0.8592), (2, 0.0000847, 0.0000998, 1.0664, 0.9490),
+    (4, 0.0001071, 0.0002461, 1.6009, 1.2476), (5, 0.0002162, 0.0002428, 1.6969, 1.5317),
+    (6, 0.0007056, 0.0004878, 1.5900, 1.5728), (7, 0.001915, 0.001425, 1.4810, 1.4745),
+    (8, 0.004115, 0.003450, 1.3905, 1.3797), (10, 0.01217, 0.01129, 1.2571, 1.2156),
+    (11, 0.01772, 0.01731, 1.2140, 1.1617), (12, 0.02386, 0.02455, 1.1825, 1.1216),
+    (15, 0.04481, 0.05008, 1.1233, 1.0440), (18, 0.07078, 0.07708, 1.0818, 1.0025),
+    (20, 0.09164, 0.09611, 1.0568, 0.9847),
+]
+# Atenuación gaseosa aproximada [dB/km] -> [Supuesto]; verificar con ITU-R P.676-12
+GAS_APROX = [(5, 0.006), (6, 0.007), (8, 0.008), (11, 0.010), (15, 0.03), (18, 0.07), (20, 0.10)]
+
+
+def _interp(f, col_idx, log_y):
+    pts = P838
+    if f <= pts[0][0]: row = [pts[0], pts[0]]
+    elif f >= pts[-1][0]: row = [pts[-1], pts[-1]]
+    else:
+        for a, b in zip(pts, pts[1:]):
+            if a[0] <= f <= b[0]: row = [a, b]; break
+    a, b = row
+    if a[0] == b[0]: return a[col_idx]
+    t = (math.log10(f) - math.log10(a[0])) / (math.log10(b[0]) - math.log10(a[0]))
+    if log_y:
+        return 10 ** (math.log10(a[col_idx]) + t * (math.log10(b[col_idx]) - math.log10(a[col_idx])))
+    return a[col_idx] + t * (b[col_idx] - a[col_idx])
+
+
+def gamma_lluvia(f, R, tau_deg=0.0, theta_deg=0.0):
+    """P.838-3 (ec. 2-3). tau=0 polarización horizontal, 90 vertical."""
+    kH, kV = _interp(f, 1, True), _interp(f, 2, True)
+    aH, aV = _interp(f, 3, False), _interp(f, 4, False)
+    c = math.cos(math.radians(theta_deg)) ** 2 * math.cos(math.radians(2 * tau_deg))
+    k = (kH + kV + (kH - kV) * c) / 2
+    a = (kH * aH + kV * aV + (kH * aH - kV * aV) * c) / (2 * k)
+    return k * R ** a, a
+
+
+def gas_db_km(f):
+    pts = GAS_APROX
+    if f <= pts[0][0]: return pts[0][1]
+    if f >= pts[-1][0]: return pts[-1][1]
+    for a, b in zip(pts, pts[1:]):
+        if a[0] <= f <= b[0]:
+            return a[1] + (f - a[0]) / (b[0] - a[0]) * (b[1] - a[1])
+
+
+def fspl(d_km, f_ghz):
+    return 92.45 + 20 * math.log10(f_ghz) + 20 * math.log10(d_km)
+
+
+def ganancia_parabola(D_m, f_ghz, eta=0.55):
+    return 10 * math.log10(eta * (math.pi * D_m * f_ghz * 1e9 / 299792458) ** 2)
+
+
+def fresnel(d_km, f_ghz, d1_km=None, n=1):
+    d1 = d_km / 2 if d1_km is None else d1_km
+    return 17.32 * math.sqrt(n * d1 * (d_km - d1) / (f_ghz * d_km))
+
+
+def abultamiento(d_km, k=4 / 3, d1_km=None):
+    d1 = d_km / 2 if d1_km is None else d1_km
+    return d1 * (d_km - d1) / (12.74 * k)
+
+
+def lluvia_p530(d_km, f, R001, tau=0.0, p=0.01):
+    """P.530-17: d_eff = d*r ; A0.01 = gamma*d_eff ; escalado a p (0.001-1 %)."""
+    g, a = gamma_lluvia(f, R001, tau)
+    den = 0.477 * d_km ** 0.633 * R001 ** (0.073 * a) * f ** 0.123 - 10.579 * (1 - math.exp(-0.024 * d_km))
+    r = 1 / den if den > 0 else 2.5
+    r = min(r, 2.5)
+    d_eff = d_km * r
+    A001 = g * d_eff
+    Ap = A001 * 0.12 * p ** -(0.546 + 0.043 * math.log10(p))
+    return dict(gamma=g, alpha=a, r=r, d_eff=d_eff, A001=A001, Ap=Ap)
+
+
+def evaluar_enlace(f_ghz=5.8, d_km=47.0, bw_mhz=20.0, avail=99.99, tx_dbm=27.0,
+                   D_ant_m=1.2, perdidas_cable_db=2.0, sens_dbm=-82.0, R001=100.0,
+                   k=4 / 3, tau=0.0, margen_obstaculo_m=0.0, vegetacion_m=0.0,
+                   despeje_perfil_m=None, pire_max_dbm=None):
+    """despeje_perfil_m: despeje real [m] sobre el obstáculo crítico (de perfil SRTM). None = sin perfil."""
+    p = 100 - avail
+    G = ganancia_parabola(D_ant_m, f_ghz)
+    L = fspl(d_km, f_ghz)
+    gas = gas_db_km(f_ghz) * d_km
+    rain = lluvia_p530(d_km, f_ghz, R001, tau, p)
+    rsl = tx_dbm - perdidas_cable_db + 2 * G - L - gas
+    rsl_rain = rsl - rain["Ap"]
+    pire = tx_dbm - perdidas_cable_db / 2 + G
+    r1, bulge = fresnel(d_km, f_ghz), abultamiento(d_km, k)
+    bulge_peor = abultamiento(d_km, 2 / 3)
+    h_min = 0.6 * r1 + bulge + margen_obstaculo_m + vegetacion_m
+    fm, fm_rain = rsl - sens_dbm, rsl_rain - sens_dbm
+
+    if fm_rain < 0:
+        dic, why = "REQUIERE REPETIDOR / REDISEÑO", "Fade margin neto bajo lluvia < 0 dB (limitante: potencia/lluvia)."
+    elif despeje_perfil_m is None:
+        dic, why = "VIABLE CONDICIONADO A PERFIL DE TERRENO", "Presupuesto de potencia cierra; LoS no verificada sin perfil topográfico."
+    elif despeje_perfil_m < 0.6 * r1:
+        dic, why = "REQUIERE REPETIDOR", f"Despeje {despeje_perfil_m:.1f} m < 0.6·r1 = {0.6*r1:.1f} m (limitante: LoS)."
+    else:
+        dic, why = "VIABLE", "Despeje >= 0.6·r1 y fade margin neto bajo lluvia > 0 dB."
+    if pire_max_dbm is not None and pire > pire_max_dbm:
+        why += f" PIRE {pire:.1f} dBm excede límite declarado {pire_max_dbm} dBm."
+    return {
+        "entradas": dict(f_ghz=f_ghz, d_km=d_km, bw_mhz=bw_mhz, avail=avail, tx_dbm=tx_dbm,
+                         D_ant_m=D_ant_m, sens_dbm=sens_dbm, R001=R001, k=k),
+        "fresnel_r1_m": round(r1, 1), "r1_60pct_m": round(0.6 * r1, 1),
+        "abultamiento_m": round(bulge, 1), "abultamiento_k23_m": round(bulge_peor, 1),
+        "altura_min_torre_m": round(h_min, 1),
+        "FSPL_dB": round(L, 1), "G_antena_dBi": round(G, 1), "PIRE_dBm": round(pire, 1),
+        "gas_dB": round(gas, 2), "lluvia_gamma_dB_km": round(rain["gamma"], 3),
+        "lluvia_d_eff_km": round(rain["d_eff"], 1), "lluvia_A001_dB": round(rain["A001"], 1),
+        "lluvia_A_disp_dB": round(rain["Ap"], 1),
+        "RSL_despejado_dBm": round(rsl, 1), "RSL_lluvia_dBm": round(rsl_rain, 1),
+        "fade_margin_dB": round(fm, 1), "fade_margin_neto_lluvia_dB": round(fm_rain, 1),
+        "dictamen": dic, "justificacion": why,
+        "nota": "No incluye desvanecimiento por multitrayecto (P.530) ni difracción; verificar PIRE/banda con ANE.",
+    }
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    for n, t, d in [("f", float, 5.8), ("d", float, 47), ("bw", float, 20), ("avail", float, 99.99),
+                    ("tx", float, 27), ("ant", float, 1.2), ("sens", float, -82), ("R001", float, 100)]:
+        ap.add_argument("--" + n, type=t, default=d)
+    ap.add_argument("--despeje", type=float, default=None)
+    a = ap.parse_args()
+    print(json.dumps(evaluar_enlace(a.f, a.d, a.bw, a.avail, a.tx, a.ant, sens_dbm=a.sens, R001=a.R001,
+                                    despeje_perfil_m=a.despeje), indent=2, ensure_ascii=False))
+
+</script>
+<script>
+/* ---------- Modelos ITU-R (idénticos a radioenlace_itu.py) ---------- */
+const P838=[[1,2.59e-5,3.08e-5,.9691,.8592],[2,8.47e-5,9.98e-5,1.0664,.949],[4,1.071e-4,2.461e-4,1.6009,1.2476],[5,2.162e-4,2.428e-4,1.6969,1.5317],[6,7.056e-4,4.878e-4,1.59,1.5728],[7,1.915e-3,1.425e-3,1.481,1.4745],[8,4.115e-3,3.45e-3,1.3905,1.3797],[10,.01217,.01129,1.2571,1.2156],[11,.01772,.01731,1.214,1.1617],[12,.02386,.02455,1.1825,1.1216],[15,.04481,.05008,1.1233,1.044],[18,.07078,.07708,1.0818,1.0025],[20,.09164,.09611,1.0568,.9847]];
+const GAS=[[5,.006],[6,.007],[8,.008],[11,.01],[15,.03],[18,.07],[20,.1]];
+const L=Math.log10;
+const seg=(t,f)=>{if(f<=t[0][0])return[t[0],t[0]];const z=t[t.length-1];if(f>=z[0])return[z,z];for(let i=0;i<t.length-1;i++)if(f>=t[i][0]&&f<=t[i+1][0])return[t[i],t[i+1]]};
+const interp=(f,c,lg)=>{const[a,b]=seg(P838,f);if(a[0]===b[0])return a[c];const t=(L(f)-L(a[0]))/(L(b[0])-L(a[0]));return lg?10**(L(a[c])+t*(L(b[c])-L(a[c]))):a[c]+t*(b[c]-a[c])};
+const gasKm=f=>{const[a,b]=seg(GAS,f);return a[0]===b[0]?a[1]:a[1]+(f-a[0])/(b[0]-a[0])*(b[1]-a[1])};
+function rain(d,f,R,tau,p){const kH=interp(f,1,1),kV=interp(f,2,1),aH=interp(f,3),aV=interp(f,4),c=Math.cos(2*tau*Math.PI/180);
+ const k=(kH+kV+(kH-kV)*c)/2,a=(kH*aH+kV*aV+(kH*aH-kV*aV)*c)/(2*k),g=k*R**a;
+ const den=.477*d**.633*R**(.073*a)*f**.123-10.579*(1-Math.exp(-.024*d));
+ const r=Math.min(den>0?1/den:2.5,2.5),de=d*r,A1=g*de;return{g,a,de,r,A1,Ap:A1*.12*p**-(.546+.043*L(p))}}
+const DEF={f:5.8,d:47,bw:20,av:99.99,tx:27,D:1.2,cab:2,sens:-82,R:100,k:4/3,veg:12,tau:0,desp:null};
+function calc(i){i={...DEF,...i};const p=100-i.av,d=i.d,f=i.f;
+ const G=10*L(.55*(Math.PI*i.D*f*1e9/299792458)**2),fs=92.45+20*L(f)+20*L(d),gas=gasKm(f)*d,rn=rain(d,f,i.R,i.tau,p);
+ const rsl=i.tx-i.cab+2*G-fs-gas,rr=rsl-rn.Ap,fm=rsl-i.sens,fn=rr-i.sens,pire=i.tx-i.cab/2+G;
+ const r1=17.32*Math.sqrt(d*d/4/(f*d)),bl=d*d/4/(12.74*i.k),bw=d*d/4/(12.74*2/3),h=.6*r1+bl+i.veg;
+ let code,why;
+ if(fn<0){code="REDIS";why="Fade margin neto bajo lluvia < 0 dB. Factor limitante: potencia / atenuación por lluvia."}
+ else if(i.desp==null){code="COND";why="El presupuesto de potencia cierra con margen positivo bajo lluvia. La LoS no puede confirmarse sin perfil topográfico (SRTM / Radio Mobile)."}
+ else if(i.desp<.6*r1){code="REP";why=`Despeje de perfil ${i.desp} m < 0,6·r1 = ${(.6*r1).toFixed(1)} m. Factor limitante: línea de vista.`}
+ else{code="OK";why="Despeje ≥ 0,6·r1 y fade margin neto bajo lluvia > 0 dB."}
+ return{i,p,G,fs,gas,rn,rsl,rr,fm,fn,pire,r1,bl,bw,h,code,why}}
+const DIC={OK:["VIABLE","d-ok"],COND:["VIABLE CONDICIONADO A PERFIL DE TERRENO","d-wn"],REP:["REQUIERE REPETIDOR","d-bad"],REDIS:["REQUIERE REPETIDOR / REDISEÑO","d-bad"]};
+
+/* ---------- Interfaz del agente ---------- */
+const FLD=[["f","Frecuencia (GHz)"],["bw","Ancho de banda (MHz)"],["d","Distancia (km)"],["av","Disponibilidad (%)"],["tx","Tx (dBm)"],["D","Parábola (m)"],["cab","Cable+conect. (dB)"],["sens","Sensibilidad (dBm)"],["R","R0,01 (mm/h)"],["veg","Vegetación (m)"],["k","Factor k"],["desp","Despeje de perfil (m)"]];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+$("#form").innerHTML=FLD.map(([id,l])=>`<div><label for="i_${id}">${l}</label><input id="i_${id}" type="number" step="any"${id==="desp"?' placeholder="sin perfil"':""}></div>`).join("")+`<div class="full"><label for="i_tau">Polarización</label><select id="i_tau"><option value="0">Horizontal</option><option value="90">Vertical</option></select></div>`;
+function fill(){FLD.forEach(([id])=>{$("#i_"+id).value=DEF[id]==null?"":+DEF[id].toFixed(4)})}
+fill();$("#def").onclick=()=>{fill();$("#i_tau").value="0";$("#out").innerHTML=""};
+const tag=t=>`<span class="tg ${t}">[${{E:"Entrada",S:"Supuesto",C:"Calculado"}[t]}]</span>`;
+const r=(a,fo,v,t)=>`<tr><td>${a}</td><td class="f">${fo}</td><td class="n">${v}</td><td>${tag(t)}</td></tr>`;
+const x=(v,u,n=1)=>`${v.toFixed(n)} ${u}`;
+function run(){
+ const inp={};FLD.forEach(([id])=>{const v=$("#i_"+id).value;inp[id]=v===""?(id==="desp"?null:DEF[id]):parseFloat(v)});inp.tau=parseFloat($("#i_tau").value);
+ if(!(inp.f>0&&inp.d>0&&inp.av<100)){$("#out").innerHTML='<div class="msg"><div class="av">RF</div><div class="bub">Parámetros inválidos: verifique frecuencia, distancia y disponibilidad (&lt; 100 %).</div></div>';return}
+ const c=calc(inp),t=id=>(id==="desp"?inp.desp!=null:Math.abs(inp[id]-DEF[id])>1e-9)?"E":"S",pp=c.p.toPrecision(2);
+ const [dl,dc]=DIC[c.code];
+ $("#out").innerHTML=`<div class="msg"><div class="av">RF</div><div class="bub" id="rep">
+<div class="step"><h3>1 · Parámetros de entrada</h3><div class="tw"><table><tr><th>Parámetro</th><th></th><th>Valor</th><th>Origen</th></tr>
+${FLD.map(([id,l])=>r(l,"",inp[id]==null?"sin perfil":+(+inp[id]).toFixed(4),t(id))).join("")}
+${r("Polarización","",inp.tau?"Vertical":"Horizontal",inp.tau?"E":"S")}</table></div></div>
+<div class="step"><h3>2 · Análisis topográfico</h3>
+<ul><li>Riesgo de obstrucción por crestas intermedias en el corredor Chipaque–Quetame; desnivel &gt; 1500 m entre sitios.</li>
+<li>Abultamiento terrestre con k = 4/3 (estándar) y k = 2/3 (peor caso por subrefracción).</li>
+<li>Ángulos de elevación elevados por desnivel: verificar alineación y patrón de antena con el perfil real.</li>
+<li>No se asumen altitudes ni obstáculos; se requiere perfil SRTM / Radio Mobile / Google Earth.</li></ul>
+<div class="tw"><table><tr><th>Parámetro</th><th>Modelo</th><th>Valor</th><th>Origen</th></tr>
+${r("Radio 1.ª Fresnel (punto medio)","17,32·√(d1·d2/(f·d)) con d1=d2=d/2",x(c.r1,"m"),"C")}
+${r("Despeje 60 % de r1","0,6·r1",x(.6*c.r1,"m"),"C")}
+${r("Abultamiento k = "+inp.k.toFixed(3),"d1·d2/(12,74·k)",x(c.bl,"m"),"C")}
+${r("Abultamiento k = 2/3","d1·d2/(12,74·k)",x(c.bw,"m"),"C")}
+${r("Altura mín. sobre obstáculo central","0,6·r1 + h_bulge + vegetación",x(c.h,"m"),"C")}</table></div></div>
+<div class="step"><h3>3 · Presupuesto de enlace</h3><div class="tw"><table><tr><th>Parámetro</th><th>Modelo / sustitución</th><th>Valor</th><th>Origen</th></tr>
+${r("FSPL","ITU-R P.525: 92,45+20·log(f)+20·log(d) = 92,45+20·log("+inp.f+")+20·log("+inp.d+")",x(c.fs,"dB"),"C")}
+${r("Potencia Tx","—",x(inp.tx,"dBm"),t("tx"))}
+${r("Cable/conectores (Tx+Rx)","—",x(inp.cab,"dB"),t("cab"))}
+${r("Ganancia por antena (Ø "+inp.D+" m)","10·log(η·(π·D·f/c)²), η = 0,55",x(c.G,"dBi"),"C")}
+${r("PIRE","Tx − L_cab/2 + G",x(c.pire,"dBm"),"C")}
+${r("Gases","γ_gas·d (aprox.; verificar P.676-12)",x(c.gas,"dB",2),"S")}
+${r("γ lluvia","P.838-3: k·R^α, α = "+c.rn.a.toFixed(3),x(c.rn.g,"dB/km",3),"C")}
+${r("Distancia efectiva","P.530-17: d·r, r = "+c.rn.r.toFixed(3),x(c.rn.de,"km"),"C")}
+${r("Atenuación por lluvia al "+pp+" %","γ·d_eff·0,12·p^−(0,546+0,043·log p)",x(c.rn.Ap,"dB"),"C")}
+${r("<b>RSL cielo despejado</b>","Tx − L_cab + 2G − FSPL − L_gas",x(c.rsl,"dBm"),"C")}
+${r("<b>RSL bajo lluvia</b>","RSL − A_lluvia",x(c.rr,"dBm"),"C")}
+${r("Sensibilidad del receptor","modulación asumida",x(inp.sens,"dBm"),t("sens"))}
+${r("Fade Margin","RSL − sensibilidad",x(c.fm,"dB"),"C")}
+${r("<b>Fade Margin neto bajo lluvia</b>","RSL_lluvia − sensibilidad",x(c.fn,"dB"),"C")}</table></div></div>
+<div class="step"><h3>4 · Dictamen</h3><div class="dic ${dc}"><b>${dl}</b><br>${c.why}</div>
+<small>No incluye multitrayecto (P.530) ni difracción. Verificar PIRE (${c.pire.toFixed(1)} dBm) y uso de banda con la normativa vigente de la ANE.</small></div>
+<div class="row"><button class="btn s" onclick="copyRep()">Copiar reporte</button><button class="btn s" onclick="print()">Imprimir / PDF</button></div></div></div>`;
+ $("#out").scrollIntoView({behavior:"smooth",block:"start"})}
+$("#run").onclick=run;
+function copyRep(){navigator.clipboard.writeText($("#rep").innerText).catch(()=>{})}
+
+/* ---------- Pestañas, archivos y copiado ---------- */
+$$("#nav button").forEach(b=>b.onclick=()=>{$$("#nav button").forEach(x=>x.classList.toggle("on",x===b));$$("section").forEach(s=>s.classList.toggle("on",s.id===b.dataset.t))});
+$$("[data-copy]").forEach(b=>b.onclick=()=>{navigator.clipboard.writeText($("#"+b.dataset.copy).textContent).then(()=>{b.textContent="Copiado ✓";setTimeout(()=>b.textContent="Copiar",1500)}).catch(()=>{})});
+$("#p-pre").textContent=$("#d-prompt").textContent.trim();$("#s-pre").textContent=$("#d-script").textContent.trim();
+$$("[data-dl]").forEach(b=>b.onclick=()=>{const[id,n]=b.dataset.dl.split("|"),a=document.createElement("a");a.href=URL.createObjectURL(new Blob([$("#"+id).textContent],{type:"text/plain;charset=utf-8"}));a.download=n;a.click()});
+
+/* ---------- Pruebas (valores de radioenlace_itu.py) ---------- */
+const TC=[["T1","5,8 GHz base, sin perfil",{},24.7,141.2,34.7,9.8,-47.2,-57.0,25.0,"COND"],
+["T2","T1 + despeje 20 m",{desp:20},24.7,141.2,34.7,9.8,-47.2,-57.0,25.0,"OK"],
+["T3","T1 + despeje 5 m",{desp:5},24.7,141.2,34.7,9.8,-47.2,-57.0,25.0,"REP"],
+["T4","11 GHz, 1,8 m, 24 dBm",{f:11,D:1.8,tx:24,sens:-75,bw:40},17.9,146.7,43.7,57.6,-37.7,-95.3,-20.3,"REDIS"],
+["T5","18 GHz, 1,2 m, 20 dBm",{f:18,tx:20,sens:-78},14.0,151.0,44.5,119.6,-47.3,-166.9,-88.9,"REDIS"],
+["T6","18 GHz, 1,8 m, R=145",{f:18,D:1.8,tx:20,sens:-78,R:145},14.0,151.0,48.0,165.1,-40.2,-205.4,-127.4,"REDIS"],
+["T7","6 GHz, 0,6 m, 99,999 %",{f:6,D:.6,av:99.999},24.2,141.5,28.9,24.1,-58.9,-83.0,-1.0,"REDIS"]];
+$("#rt").onclick=()=>{let ok=0;const rows=TC.map(([id,n,p,r1,fs,g,a,rs,rl,fn,dc])=>{const c=calc(p),m=[[c.r1,r1,1],[c.fs,fs,.5],[c.G,g,.5],[c.rn.Ap,a,.5],[c.rsl,rs,.5],[c.rr,rl,.5],[c.fn,fn,.5]];
+ const good=m.every(([v,e,tol])=>Math.abs(v-e)<=tol)&&c.code===dc;if(good)ok++;
+ return`<tr><td>${id}</td><td>${n}</td><td class="n">${c.r1.toFixed(1)}</td><td class="n">${c.fs.toFixed(1)}</td><td class="n">${c.rn.Ap.toFixed(1)}</td><td class="n">${c.rr.toFixed(1)}</td><td class="n">${c.fn.toFixed(1)}</td><td>${DIC[c.code][0]}</td><td class="${good?"pass":"fail"}">${good?"PASA":"FALLA"}</td></tr>`}).join("");
+ $("#tt").innerHTML=`<tr><th>ID</th><th>Caso</th><th>r1 (m)</th><th>FSPL</th><th>A lluvia</th><th>RSL lluvia</th><th>FM neto</th><th>Dictamen</th><th>Estado</th></tr>${rows}<tr><td colspan="9"><b>${ok} / ${TC.length} pruebas superadas</b></td></tr>`};
+</script>
+</body></html>
